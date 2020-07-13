@@ -1,24 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Header from './components/Header';
+import Products from './components/Products';
+import Home from './components/Home';
+import ProductDetails from './components/ProductDetails';
+import NotFound from './components/NotFound';
+import ProductIndex from './components/ProductIndex';
+
+import Cart from './components/Cart';
+
+import { GlobalProvider } from './context/GlobalState';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <GlobalProvider>
+
+      <Router>
+        <Header/>
+        <br/> <br/>
+        
+        <Routes>
+
+          <Route path='/' element={<Home/>}/>
+
+          <Route path='products' element={<Products/>}>
+            
+              <Route path='/' element={<ProductIndex/>}/>
+              <Route path=':productId' element={<ProductDetails/>}/>
+          </Route>
+          <Route path='cart' element={<Cart/>}></Route>
+
+          <Route path='*' element={<NotFound/>}/>
+
+        </Routes>
+      </Router>
+
+      </GlobalProvider>
+
     </div>
   );
 }
